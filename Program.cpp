@@ -1,11 +1,11 @@
-
+using System;
 using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        List<string> tarefas = new List<string>();
+        List<string> tarefas = new List<string>();  
         int opcao;
 
         do
@@ -15,37 +15,56 @@ class Program
             Console.WriteLine("2. Listar tarefas");
             Console.WriteLine("3. Remover tarefa");
             Console.WriteLine("4. Sair");
-            Console.Write("Escolha uma opÁ„o: ");
-            opcao = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Escolha uma op√ß√£o: ");
+
+            // Input validation for option
+            if (!int.TryParse(Console.ReadLine(), out opcao))
+            {
+                Console.WriteLine("Por favor, insira um n√∫mero v√°lido.");
+                continue;
+            }
 
             switch (opcao)
             {
                 case 1:
                     Console.Write("Digite a tarefa a ser adicionada: ");
                     string tarefa = Console.ReadLine();
-                    tarefas.Add(tarefa);
-                    Console.WriteLine("Tarefa adicionada com sucesso!");
+                    if (!string.IsNullOrWhiteSpace(tarefa))
+                    {
+                        tarefas.Add(tarefa);
+                        Console.WriteLine("Tarefa adicionada com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Tarefa n√£o pode estar vazia.");
+                    }
                     break;
 
                 case 2:
                     Console.WriteLine("Lista de Tarefas:");
-                    for (int i = 0; i < tarefas.Count; i++)
+                    if (tarefas.Count == 0)
                     {
-                        Console.WriteLine($"{i + 1}. {tarefas[i]}");
+                        Console.WriteLine("Nenhuma tarefa cadastrada.");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < tarefas.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {tarefas[i]}");
+                        }
                     }
                     break;
 
                 case 3:
-                    Console.Write("Digite o n˙mero da tarefa a ser removida: ");
-                    int indice = Convert.ToInt32(Console.ReadLine()) - 1;
-                    if (indice >= 0 && indice < tarefas.Count)
+                    Console.Write("Digite o n√∫mero da tarefa a ser removida: ");
+                    if (int.TryParse(Console.ReadLine(), out int indice) && indice > 0 && indice <= tarefas.Count)
                     {
-                        tarefas.RemoveAt(indice);
+                        tarefas.RemoveAt(indice - 1);
                         Console.WriteLine("Tarefa removida com sucesso!");
                     }
                     else
                     {
-                        Console.WriteLine("Õndice inv·lido!");
+                        Console.WriteLine("√çndice inv√°lido! Tente novamente.");
                     }
                     break;
 
@@ -54,7 +73,7 @@ class Program
                     break;
 
                 default:
-                    Console.WriteLine("OpÁ„o inv·lida! Tente novamente.");
+                    Console.WriteLine("Op√ß√£o inv√°lida! Tente novamente.");
                     break;
             }
 
