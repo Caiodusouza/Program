@@ -17,7 +17,7 @@ class Program
             Console.WriteLine("4. Sair");
             Console.Write("Escolha uma opção: ");
 
-            // Input validation for option
+      
             if (!int.TryParse(Console.ReadLine(), out opcao))
             {
                 Console.WriteLine("Por favor, insira um número válido.");
